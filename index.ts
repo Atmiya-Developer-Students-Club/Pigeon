@@ -42,6 +42,10 @@ const swaggerSpec = swaggerJSDoc(swaggerOptions);
 
 const app = express();
 
+app.get("/", (_, res) => {
+  res.send("Hello From Pigeon!");
+});
+
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(express.json());
 app.use("/", mailRoutes);
