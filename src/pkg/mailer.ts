@@ -3,6 +3,12 @@ import nodemailer from "nodemailer";
 import { SMTP_CONFIG, BATCH_SIZE, BATCH_DELAY_MS } from "../utils/config";
 import { log } from "../utils/logger";
 
+function renderTemplate(template: string, data: Record<string, any>) {
+  return template.replace(/{{\s*(\w+)\s*}}/g, (_, key) =>
+    data[key] !== undefined ? String(data[key]) : ""
+  );
+}
+
 export async function sendBatch({
   subject,
   html,
@@ -10,12 +16,18 @@ export async function sendBatch({
 }: {
   subject: string;
   html: string;
-  recipients: string[];
+  recipients: { email: string; [key: string]: any }[];
 }) {
   const transporter = nodemailer.createTransport(SMTP_CONFIG);
-  const sendPromises = recipients.map((to) =>
-    transporter.sendMail({ from: SMTP_CONFIG.auth.user, to, subject, html })
-  );
+  const sendPromises = recipients.map((recipient) => {
+    const personalizedHtml = renderTemplate(html, recipient);
+    return transporter.sendMail({
+      from: SMTP_CONFIG.auth.user,
+      to: recipient.email,
+      subject,
+      html: personalizedHtml,
+    });
+  });
   return Promise.allSettled(sendPromises);
 }
 
@@ -26,7 +38,7 @@ export async function sendBulk({
 }: {
   subject: string;
   html: string;
-  recipients: string[];
+  recipients: { email: string; [key: string]: any }[];
 }) {
   let results: any[] = [];
 

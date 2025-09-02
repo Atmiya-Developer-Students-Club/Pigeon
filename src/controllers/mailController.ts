@@ -48,13 +48,13 @@ export async function sendSingleEmail(req: Request, res: Response) {
     return res.status(400).send("Invalid payload: must provide exactly one recipient");
   }
 
-  log(`Request: subject='${subject}', recipient=${recipients[0]}`);
+  log(`Request: subject='${subject}', recipient=${recipients[0]?.email ?? "unknown"}`);
   try {
     const results = await sendBulk({ subject, html, recipients });
 
     const failed = results.filter((r: any) => r.status === "rejected");
     if (failed.length > 0) {
-      logError(`Failed to send to recipient: ${recipients[0]}`);
+      logError(`Failed to send to recipient: ${recipients[0]?.email ?? "Unknown"}`);
     }
 
     res.status(200).json({ success: failed.length === 0, sent: failed.length === 0 ? 1 : 0, failed: failed.length });
