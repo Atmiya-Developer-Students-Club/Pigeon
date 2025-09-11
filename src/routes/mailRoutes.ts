@@ -35,7 +35,7 @@ const router = Router();
  *                   type: string
  *                 description: List of recipient email addresses
  *               attachments:
- *                type: array
+ *                 type: array
  *                 items:
  *                   type: object
  *                   properties:

@@ -4,6 +4,7 @@ import { PORT } from "./src/utils/config";
 import { log } from "./src/utils/logger";
 import swaggerUi from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
+import path from "path";
 
 const swaggerOptions = {
   definition: {
@@ -43,7 +44,7 @@ const swaggerSpec = swaggerJSDoc(swaggerOptions);
 const app = express();
 
 app.get("/", (_, res) => {
-  res.send("Hello From Pigeon!");
+  res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
