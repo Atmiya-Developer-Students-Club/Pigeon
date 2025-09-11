@@ -27,14 +27,14 @@ Pigeon provides a simple REST API for sending emails in bulk or individually. It
 
 ## 🧠 Tech Stack
 
-| Layer        | Tech         |
-|--------------|--------------|
-| Language     | TypeScript   |
-| Framework    | Express.js   |
-| Mailer       | Nodemailer   |
-| Docs         | Swagger UI   |
-| Package Tool | Bun / npm    |
-| Editor       | VS Code      |
+| Layer        | Tech       |
+| ------------ | ---------- |
+| Language     | TypeScript |
+| Framework    | Express.js |
+| Mailer       | Nodemailer |
+| Docs         | Swagger UI |
+| Package Tool | Bun / npm  |
+| Editor       | VS Code    |
 
 ---
 
@@ -50,6 +50,7 @@ Pigeon provides a simple REST API for sending emails in bulk or individually. It
 ## 🚀 Getting Started
 
 > Prerequisites:
+
 - Node.js or Bun
 - Git
 - VS Code
@@ -81,33 +82,43 @@ Pigeon provides a simple REST API for sending emails in bulk or individually. It
 
 ## 🎯 Features
 
-* 📧 Send bulk emails with batching (configurable batch size & delay)
-* 📩 Send single emails with the same API
-* 🔑 API key protection for all endpoints
-* 📝 Swagger UI for interactive API docs
-* 🪵 Request and error logging
-* ⚡ Simple, fast, and production-ready
+- 📧 Send bulk emails with batching (configurable batch size & delay)
+- 📩 Send single emails with the same API
+- 🔑 API key protection for all endpoints
+- 📝 Swagger UI for interactive API docs
+- 🪵 Request and error logging
+- ⚡ Simple, fast, and production-ready
 
 ---
 
 ## 📚 API Reference
 
 ### Authentication
+
 All endpoints require an `Authorization: Bearer <API_KEY>` header.
 
 ### POST `/bulk`
+
 Send emails to multiple recipients in batches.
 
 **Request Body:**
+
 ```json
 {
   "subject": "Hello!",
   "html": "<b>Welcome!</b>",
-  "recipients": ["user1@example.com", "user2@example.com"]
+  "recipients": ["user1@example.com", "user2@example.com"],
+  "attachments": [
+    {
+      "filename": "poster.png",
+      "href": "https://example.com/poster.png"
+    }
+  ]
 }
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -117,18 +128,27 @@ Send emails to multiple recipients in batches.
 ```
 
 ### POST `/single`
+
 Send an email to a single recipient.
 
 **Request Body:**
+
 ```json
 {
   "subject": "Hi!",
   "html": "<b>Just you!</b>",
-  "recipients": ["user@example.com"]
+  "recipients": ["user@example.com"],
+  "attachments": [
+    {
+      "filename": "poster.png",
+      "href": "https://example.com/poster.png"
+    }
+  ]
 }
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -138,21 +158,22 @@ Send an email to a single recipient.
 ```
 
 ### API Docs
+
 Visit [http://localhost:3001/api-docs](http://localhost:3001/api-docs) for full Swagger documentation and live testing.
 
 ---
 
 ## 📸 Demo & Screenshots
 
-*To be added.*
+_To be added._
 
 ---
 
 ## 🙏 Acknowledgments
 
-* [Nodemailer Docs](https://nodemailer.com/about/)
-* [Express.js Docs](https://expressjs.com/)
-* [Swagger UI](https://swagger.io/tools/swagger-ui/)
+- [Nodemailer Docs](https://nodemailer.com/about/)
+- [Express.js Docs](https://expressjs.com/)
+- [Swagger UI](https://swagger.io/tools/swagger-ui/)
 
 ---
 

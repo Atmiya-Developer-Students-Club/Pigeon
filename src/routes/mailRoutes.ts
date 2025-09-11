@@ -34,6 +34,16 @@ const router = Router();
  *                 items:
  *                   type: string
  *                 description: List of recipient email addresses
+ *               attachments:
+ *                type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     filename:
+ *                       type: string
+ *                     href:
+ *                       type: string
+ *                   description: List of attachments with filename and href
  *     responses:
  *       200:
  *         description: Bulk email send result
@@ -85,6 +95,16 @@ router.post("/bulk", checkApiKey, sendBulkEmail);
  *                 items:
  *                   type: string
  *                 description: Array with a single recipient email address
+ *               attachments:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     filename:
+ *                       type: string
+ *                     href:
+ *                       type: string
+ *                 description: List of attachments with filename and href
  *     responses:
  *       200:
  *         description: Single email send result
