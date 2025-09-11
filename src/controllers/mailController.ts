@@ -11,11 +11,11 @@ export async function sendBulkEmail(req: Request, res: Response) {
     return res.status(400).send("Invalid payload");
   }
 
-  const { subject, html, recipients } = parseResult.data;
+  const { subject, html, recipients, attachments } = parseResult.data;
   log(`Request: subject='${subject}', recipients=${recipients.length}`);
 
   try {
-    const results = await sendBulk({ subject, html, recipients });
+    const results = await sendBulk({ subject, html, recipients, attachments });
 
     const failed = results.filter((r: any) => r.status === "rejected");
     if (failed.length > 0) {

@@ -11,5 +11,11 @@ export const bulkEmailSchema = z.object({
         })
         .catchall(z.any()) // allow any extra fields
     )
-    .nonempty(), // ensure at least one recipient
+    .nonempty(),
+  attachments: z.array(
+    z.object({
+      filename: z.string(),
+      href: z.string(),
+    })
+  ).optional()
 });

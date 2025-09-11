@@ -13,10 +13,12 @@ export async function sendBatch({
   subject,
   html,
   recipients,
+  attachments,
 }: {
   subject: string;
   html: string;
-  recipients: { email: string; [key: string]: any }[];
+  recipients: { email: string;[key: string]: any }[];
+  attachments?: { filename: string; href: string }[];
 }) {
   const transporter = nodemailer.createTransport(SMTP_CONFIG);
   const sendPromises = recipients.map((recipient) => {
@@ -26,6 +28,7 @@ export async function sendBatch({
       to: recipient.email,
       subject,
       html: personalizedHtml,
+      attachments,
     });
   });
   return Promise.allSettled(sendPromises);
@@ -35,10 +38,12 @@ export async function sendBulk({
   subject,
   html,
   recipients,
+  attachments,
 }: {
   subject: string;
   html: string;
-  recipients: { email: string; [key: string]: any }[];
+  recipients: { email: string;[key: string]: any }[];
+  attachments?: { filename: string; href: string }[];
 }) {
   let results: any[] = [];
 
@@ -46,7 +51,7 @@ export async function sendBulk({
     const batch = recipients.slice(i, i + BATCH_SIZE);
     log(`Sending batch ${i / BATCH_SIZE + 1} (${batch.length} emails)`);
 
-    const batchResults = await sendBatch({ subject, html, recipients: batch });
+    const batchResults = await sendBatch({ subject, html, recipients: batch, attachments });
     results.push(...batchResults);
 
     if (i + BATCH_SIZE < recipients.length) {
