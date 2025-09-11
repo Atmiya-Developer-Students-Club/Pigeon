@@ -43,7 +43,7 @@ const router = Router();
  *                       type: string
  *                     href:
  *                       type: string
- *                   description: List of attachments with filename and href
+ *                 description: List of attachments with filename and href
  *     responses:
  *       200:
  *         description: Bulk email send result
