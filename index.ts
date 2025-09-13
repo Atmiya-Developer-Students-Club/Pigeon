@@ -5,6 +5,7 @@ import { log } from "./src/utils/logger";
 import swaggerUi from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
 import path from "path";
+import cors from "cors";
 
 const swaggerOptions = {
   definition: {
@@ -42,6 +43,11 @@ const swaggerOptions = {
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
 
 const app = express();
+
+app.use(cors({
+  origin: ["https://adsc.atmiya.in", 'https://events.adsc-atmiya.in'],
+  methods: ["GET", "POST"],
+}))
 
 app.get("/", (_, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));
